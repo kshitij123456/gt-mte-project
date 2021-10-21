@@ -1,0 +1,159 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body{
+    height:100%;
+    width: 100%;
+    margin:0;
+}
+
+.h-100{
+    height:100%;
+}
+
+.w-100{
+    width: 100%;
+}
+
+.w-25{
+    width: 25%;
+}
+
+.w-20{
+    width:20%;
+}
+
+.h-25{
+    height: 25%;
+}
+
+.w-75{
+    width:75%;
+}
+
+.w-80{
+    width:80%;
+}
+
+.position-relative{
+    position: relative;
+}
+
+.layer-below{
+    z-index: -1;
+}
+
+.m-3{
+    margin: 3rem;
+}
+
+.m-auto{
+    margin: auto;
+}
+
+.mt-3{
+    margin-top: 3rem;
+}
+
+.mt-2{
+    margin-top: 2rem;
+}
+
+.ml-2{
+    margin-left: 2rem;
+}
+
+.mt-1{
+    margin-top: 1rem;
+}
+
+.p-1{
+    padding: 1rem;
+}
+
+
+
+
+.bg-primary{
+    background-color: #3f51b5;
+}
+
+.bg-white{
+    background-color: white;
+}
+
+.bg-grey{
+    background-color: rgb(192, 192, 192);
+}
+
+.text-white{
+    color: white;
+}
+
+.text-primary{
+    color: #3f51b5;
+}
+
+.bg-dark{
+    background-color: rgb(41, 41, 41);
+}
+
+
+
+
+.flex{
+    display: flex;
+}
+
+.shadow-md{
+    box-shadow: 1px 1px 20px 0px #b9b9b9;
+}
+
+.row{
+    flex-direction: row;
+}
+
+.column{
+    flex-direction: column;
+}
+
+.justify-between{
+    justify-content: space-between;
+}
+
+.justify-center{
+    justify-content: center;
+}
+
+
+
+
+.border-sm{
+    border: 1px solid black;
+}
+
+.border-none{
+    border: 0px;;
+}
+
+.curved-btn{
+    font-family: Roboto;
+    font-weight: 500;
+    border-radius: 2rem;
+    filter: drop-shadow(0px 5px 10px rgba(0,0,0,0.1)) ;
+    background-color: rgb(0, 206, 79);
+    outline: none;
+    transition-duration: 0.25s;
+    transition-timing-function: ease-in;
+}
+
+.curved-btn:hover{
+    transform: scale(1.05);
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+
+.align-center{
+    text-align: center;
+}

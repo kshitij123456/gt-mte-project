@@ -1,0 +1,62 @@
+<section class="w-100 h-100 side-border bg-dark overflow-scroll">
+    <mat-toolbar class="bg-primary">
+        <span class="text-white">Graph Theory</span>
+    </mat-toolbar>
+    <!-- <div class="flex column w-75 justify-between h-25 mt-3 m-auto bg-grey border-sm">
+        <div class="flex row justify-between">
+            <div class="bg-white">112.2</div>
+            <div class="bg-white">112.2</div>
+        </div>
+        <div class="flex row justify-between">
+            <div class="bg-white">112.2</div>
+            <div class="bg-white">112.2</div>
+        </div>
+    </div> -->
+
+
+    <div class="w-100 flex row justify-center m-auto mt-3">
+        <button mat-raised-button color="primary" (click) = "onButtonClick()">Find Roads</button>
+    </div>
+
+    <div class="w-75 m-auto mt-3 details">
+        <p class="align-center w-100">
+            <b>Details</b>
+        </p>
+        <p>
+            Total Elements : {{totalElements}}
+        </p>
+        <p>
+            Total Nodes : {{totalNodes}}
+        </p>
+        <p>
+            Total Roads : {{totalRoads}}
+        </p>
+    </div>
+
+    <div class="w-100 flex row justify-center m-auto mt-3">
+        <button mat-raised-button color="accent" (click) = "findCriticalRoads()">Critical Roads</button>
+    </div>
+
+    <form novalidate [formGroup]="form" class="w-75 flex column justify-center m-auto mt-3 form">
+        <div>
+            <div>
+                <label>On the basis :</label>
+            </div>
+            <mat-radio-group [formControl]="betweennessChoice">
+                <div>
+                    <mat-radio-button class="ml-2 mt-1" value="Threshold" >Set Threshold</mat-radio-button>
+                </div>
+                <div>
+                    <mat-radio-button class="ml-2 mt-1" value="Quartiles" >Quartiles</mat-radio-button>
+                </div>
+            </mat-radio-group>
+        </div>  
+        <p>
+            <mat-slider matInput class="mt-2" formControlName="thres" thumbLabel  min="1" max="5" step="0.1"></mat-slider>
+        </p>
+        <p class="w-100 flex row justify-center m-auto mt-3">
+            <button type="submit" mat-raised-button color="accent" (click) = "getMore()">Get More</button>
+        </p>
+    </form>
+    
+</section>
