@@ -11,9 +11,9 @@ import * as betweenness from 'betweenness';
 
 export class MapService {
   map: mapboxgl.Map;
-  style = 'mapbox://styles/mapbox/streets-v11';
-  lat = 28.631129;
-  lng = 77.217753;
+  style = 'mapbox://styles/mapbox/dark-v10';
+  lat = 40.7128;
+  lng = -74.0060;
   
   zoom = 15;
   bbox = '';
