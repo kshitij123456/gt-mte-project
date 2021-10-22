@@ -15,7 +15,7 @@ export class MapService {
   lat = 28.631129;
   lng = 77.217753;
   
-  zoom = 14;
+  zoom = 15;
   bbox = '';
 
   idToIndex = [];
@@ -50,7 +50,6 @@ export class MapService {
   }
 
   buildMap() {
-    
     this.map = new mapboxgl.Map({
       container: 'map',
       style: this.style,
@@ -64,7 +63,6 @@ export class MapService {
     let sw = this.map.getBounds().getSouthWest();
     this.bbox = '(' + sw.lat + ',' + sw.lng + ',' + ne.lat + ',' + ne.lng + ')';
     console.log(this.bbox);
-    //console.log(this.http.get(this.URL + '?data=[out:json][timeout:25];(node["highway"]' + this.bbox + ';way["highway"]' + this.bbox + ';relation["highway"]' + this.bbox + ';);out body;>;out skel qt;'));
     return this.http.get(this.URL + '?data=[out:json][timeout:25];(node["highway"]' + this.bbox + ';way["highway"]' + this.bbox + ';relation["highway"]' + this.bbox + ';);out body;>;out skel qt;');
   }
 
@@ -82,57 +80,6 @@ export class MapService {
         this.dis.push(0);
         this.dis.push(0);
         index++;
-
-        // this.mapping.set(data.elements[i].id, {'location' :[ data.elements[i].lon, data.elements[i].lat], 'conNodes': []} );
-        // this.visited.set(data.elements[i].id, false);
-        // this.parent.set(data.elements[i].id, null);
-        // this.disc.set(data.elements[i].id, 0);
-        // this.low.set(data.elements[i].id, 0);
-        // let tempMap = this.map;
-        // this.map.loadImage('https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png',
-        //   function (error, image) {
-        //     if (error) throw error;
-        //     tempMap.addImage('custom-marker', image);
-        //     // Add a GeoJSON source with 2 points
-        //     tempMap.addSource(data.elements[i].id.toString(), {
-        //       'type': 'geojson',
-        //       'data': {
-        //         'type': 'FeatureCollection',
-        //         'features': [
-        //           {
-        //     // feature for Mapbox DC
-        //             'type': 'Feature',
-        //             'geometry': {
-        //               'type': 'Point',
-        //               'coordinates': [
-        //                 data.elements[i].lon,
-        //                 data.elements[i].lat
-        //               ]
-        //             },
-        //             'properties': {
-        //               'title': 'Mapbox DC'
-        //             }
-        //           }]}});
-            
-        //     // Add a symbol layer
-        //     tempMap.addLayer({
-        //     'id': data.elements[i].id.toString(),
-        //     'type': 'symbol',
-        //     'source': data.elements[i].id.toString(),
-        //     'layout': {
-        //     'icon-image': 'custom-marker',
-        //     // get the title name from the source's "title" property
-        //     'text-field': ['get', 'title'],
-        //     'text-font': [
-        //     'Open Sans Semibold',
-        //     'Arial Unicode MS Bold'
-        //     ],
-        //     'text-offset': [0, 1.25],
-        //     'text-anchor': 'top'
-        //     }
-        //     });
-        //   }
-        //   );
 
         totalNodes++;
 
@@ -155,9 +102,6 @@ export class MapService {
           if(j>0){
             this.adjArr[this.indexToId.get(data.elements[i].nodes[j])].outEdges.push(this.indexToId.get(data.elements[i].nodes[j-1]));
             this.adjArr[this.indexToId.get(data.elements[i].nodes[j-1])].outEdges.push(this.indexToId.get(data.elements[i].nodes[j]));
-
-            // this.mapping.get(data.elements[i].nodes[j]).conNodes.push(data.elements[i].nodes[j-1]);
-            // this.mapping.get(data.elements[i].nodes[j-1]).conNodes.push(data.elements[i].nodes[j]);
           }
         }
         
@@ -203,31 +147,6 @@ export class MapService {
     }
   }
 
-  // cutEdgesUtil(key:number){
-  //   this.visited.set(key, true);
-  //   this.time += 1;
-  //   this.disc.set(key, this.time);
-  //   this.low.set(key, this.time);
-
-  //   this.mapping.get(key).conNodes.forEach(element => {
-  //     if(this.visited.get(element)==false){
-  //       this.parent.set(element, key);
-  //       this.cutEdgesUtil(element);
-  //       this.low.set(key, Math.min(this.low.get(element), this.low.get(key)));
-
-  //       if(this.low.get(element) > this.disc.get(key)){
-  //         let temp = [];
-  //         temp.push(this.mapping.get(key).location);
-  //         temp.push(this.mapping.get(element).location);
-  //         this.criticalRoads.set( key.toString()+element.toString() , temp);
-  //       }
-  //     }else if(element != this.parent.get(key)){
-  //       this.low.set(key, Math.min(this.low.get(key), this.disc.get(element)));
-  //     }
-  //   });
-    
-  // }
-
   cutEdgesUtil(u : number) {
 
     this.visit[u] = true;
@@ -256,61 +175,16 @@ export class MapService {
 
   findCriticalRoads(){
     this.time = 0;
-    console.log(this.mapping);
-    console.log("Hey");
 
     this.visit.forEach((val, ind) => {
       if(val == false){
         this.cutEdgesUtil(ind);
       }
     })
-
-    // this.visited.forEach((value, key) => {
-    //   if(value== false){
-    //     this.cutEdgesUtil(key);
-    //   }
-    // })
-
-    this.findBetweenness();
-
-    console.log("Done");
-    console.log(this.critRoads);
-    //console.log(this.criticalRoads);
     this.drawCutEdges();
-    console.log("Done");
   }
 
   drawCutEdges(){
-    // this.criticalRoads.forEach((value,key) => {
-
-    //   this.map.addSource(key, {
-    //     'type': 'geojson',
-    //     'data': {
-    //     'type': 'Feature',
-    //     'properties': {},
-    //     'geometry': {
-    //       'type': 'LineString',
-    //       'coordinates': value,
-    //     }
-    //     }
-    //   });
-    //   this.map.addLayer({
-    //     'id': key,
-    //     'type': 'line',
-    //     'source': key,
-    //     'layout': {
-    //     'line-join': 'round',
-    //     'line-cap': 'round'
-    //     },
-    //     'paint': {
-    //     'line-color': '#ec407f',
-    //     'line-width': 4,
-    //     'line-opacity': 0.6,
-    //     }
-    //     });
-
-    // })
-
     this.critRoads.forEach((ele) => {
 
       this.map.addSource(ele.id, {
@@ -377,6 +251,66 @@ export class MapService {
     console.log(this.standardBetweenness);
     console.log(std);
     console.log("Gaya");
+  }
+
+
+  quartileDist(){
+    this.findBetweenness();
+    let len = this.standardBetweenness.length;
+    let i=0;
+    this.standardBetweenness.forEach(element => {
+      if(i< len/4){
+
+      }else if(i < len/2){
+        this.mapTheRoad(element, 'yellow');
+      }else if(i < 3*len/4){
+        this.mapTheRoad(element, 'orange');
+      }else{
+        this.mapTheRoad(element, 'red');
+      }
+      i++;
+    });
+    console.log("Working");
+  }
+
+  thresholdDist(lb){
+    this.findBetweenness();
+    this.standardBetweenness.forEach(element => {
+      if(element.value >= lb){
+        this.mapTheRoad(element, 'red');
+      }
+    });
+  }
+
+  mapTheRoad(data, color){
+    let sourceId = data.coordinates[0].toString()+"_"+data.coordinates[1].toString();
+    let coordinates = [this.adjArr[data.coordinates[0]].location , this.adjArr[data.coordinates[1]].location];
+    //console.log(coordinates);
+    this.map.addSource(sourceId, {
+      'type': 'geojson',
+      'data': {
+      'type': 'Feature',
+      'properties': {},
+      'geometry': {
+        'type': 'LineString',
+        'coordinates': coordinates,
+      }
+      }
+    });
+    this.map.addLayer({
+      'id': sourceId,
+      'type': 'line',
+      'source': sourceId,
+      'layout': {
+      'line-join': 'round',
+      'line-cap': 'round'
+      },
+      'paint': {
+      'line-color': color,
+      'line-width': 4,
+      'line-opacity': 0.6,
+      }
+      });
   }
 
 

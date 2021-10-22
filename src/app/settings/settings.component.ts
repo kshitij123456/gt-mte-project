@@ -53,11 +53,22 @@ export class SettingsComponent implements OnInit {
   findCriticalRoads(){
     this.map.removeAllLayers(this.areaData);
     this.map.findCriticalRoads();
+    this.areaData = null;
   }
 
   getMore(){
     console.log(this.form.get('basis').value);
     console.log(this.form.get('thres').value);
+
+    if(this.form.get('basis').value=='Quartiles'){
+      this.map.removeAllLayers(this.areaData);
+      this.map.quartileDist();
+      this.areaData = [];
+    }else if(this.form.get('basis').value=='Threshold'){
+      this.map.removeAllLayers(this.areaData);
+      this.map.thresholdDist(this.form.get('thres').value);
+      this.areaData = [];
+    }
 
   }
 
